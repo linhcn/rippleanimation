@@ -141,20 +141,6 @@ public class RippleLayout extends RelativeLayout {
         animatorSet.setDuration(rippleDurationTime);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
         animatorSet.playTogether(animatorList);
-
-        animatorSet.addListener(new AnimatorListenerAdapter() {
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                super.onAnimationRepeat(animation);
-            }
-        });
-
         return animatorSet;
     }
 

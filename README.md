@@ -3,6 +3,24 @@ It's a custom layout to create a ripple animation
 
 ## Gradle:
 
+Gradle.build
+
+```
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+  
+Gradle.app
+
+```
+dependencies {
+  implementation 'com.github.linhcn:rippleanimation:Tag'
+}
+```
 
 ## Integration:
 

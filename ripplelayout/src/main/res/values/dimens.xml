@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!--  CRipple background  -->
+    <dimen name="rippleStrokeWith">2dp</dimen>
+    <dimen name="rippleRadius">64dp</dimen>
+
+</resources>

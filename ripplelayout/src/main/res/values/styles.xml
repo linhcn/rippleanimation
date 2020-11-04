@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RippleLayout">
+        <attr name="rl_color" format="color"/>
+        <attr name="rl_strokeWidth" format="dimension"/>
+        <attr name="rl_radius" format="dimension"/>
+        <attr name="rl_scale" format="float"/>
+        <attr name="rl_duration" format="integer"/>
+        <attr name="rl_rippleAmount" format="integer"/>
+        <attr name="rl_type" format="integer"/>
+        <attr name="rl_shadow" format="integer"/>
+    </declare-styleable>
+
+</resources>

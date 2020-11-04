@@ -35,7 +35,7 @@
         android:id="@+id/btn_speed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="More Quickly 1000s"
+        android:text="More Quickly 0.5s"
         android:textAllCaps="false"/>
 
 </LinearLayout>

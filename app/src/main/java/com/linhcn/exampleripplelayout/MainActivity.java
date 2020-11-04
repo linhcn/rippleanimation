@@ -1,10 +1,10 @@
 package com.linhcn.exampleripplelayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.linhcn.ripplelayout.RippleLayout;
 
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RippleLayout rippleLayout = findViewById(R.id.ripple_bg);
+        RippleLayout rippleLayout = findViewById(R.id.ripple_bg);
         ImageView imageView = findViewById(R.id.centerImage);
         rippleLayout.startRippleAnimation();
         imageView.setOnClickListener(view -> {

@@ -1,10 +1,9 @@
 package com.linhcn.exampleripplelayout;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.linhcn.ripplelayout.RippleLayout;
 

@@ -18,7 +18,7 @@ Gradle.app
 
 ```
 dependencies {
-  implementation 'com.github.linhcn:rippleanimation:Tag'
+  implementation 'com.github.linhcn:rippleanimation:1.0.3'
 }
 ```
 

@@ -3,6 +3,7 @@ package com.linhcn.ripplelayout;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -27,18 +28,12 @@ public class RippleLayout extends RelativeLayout {
     private AnimatorSet animatorSet; // using to mix all Animators
     private ArrayList<Animator> animatorList;
     private Paint paint;
-    private LayoutParams rippleParams;
     private boolean isAnimationRunning = false;
     private boolean isRippleShadow = false;
 
-    private float rippleStrokeWidth;
-    private float rippleRadius;
-    private int rippleColor;
     private int rippleDurationTime;
     private int rippleNumber;
-    private int rippleDelay; // delay between each ripples
     private float rippleScale; // max ripple scale
-    private int rippleType; // is Paint.Style
     private int rippleShadow;
 
     public RippleLayout(Context context) {
@@ -64,14 +59,15 @@ public class RippleLayout extends RelativeLayout {
         }
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleLayout);
-        rippleStrokeWidth = typedArray.getDimension(R.styleable.RippleLayout_rl_strokeWidth, getResources().getDimension(R.dimen.rippleStrokeWith));
-        rippleRadius = typedArray.getDimension(R.styleable.RippleLayout_rl_radius, getResources().getDimension(R.dimen.rippleRadius));
+        float rippleStrokeWidth = typedArray.getDimension(R.styleable.RippleLayout_rl_strokeWidth, getResources().getDimension(R.dimen.rippleStrokeWith));
+        float rippleRadius = typedArray.getDimension(R.styleable.RippleLayout_rl_radius, getResources().getDimension(R.dimen.rippleRadius));
         rippleScale = typedArray.getFloat(R.styleable.RippleLayout_rl_scale, DEFAULT_SCALE);
         rippleDurationTime = typedArray.getInt(R.styleable.RippleLayout_rl_duration, DEFAULT_DURATION_TIME);
         rippleNumber = typedArray.getInt(R.styleable.RippleLayout_rl_rippleAmount, DEFAULT_RIPPLE_COUNT);
-        rippleType = typedArray.getInt(R.styleable.RippleLayout_rl_type, DEFAULT_FILL_TYPE);
+        // is Paint.Style
+        int rippleType = typedArray.getInt(R.styleable.RippleLayout_rl_type, DEFAULT_FILL_TYPE);
         rippleShadow = typedArray.getInt(R.styleable.RippleLayout_rl_shadow, DEFAULT_RIPPLE_SHADOW);
-        rippleColor = typedArray.getColor(R.styleable.RippleLayout_rl_color, getResources().getColor(android.R.color.background_light));
+        int rippleColor = typedArray.getColor(R.styleable.RippleLayout_rl_color, getResources().getColor(android.R.color.background_light));
         typedArray.recycle();
 
         if (rippleType == DEFAULT_FILL_TYPE) {
@@ -80,9 +76,10 @@ public class RippleLayout extends RelativeLayout {
 
         isRippleShadow = rippleShadow != DEFAULT_RIPPLE_SHADOW;
         paint = initPaintRippleView(rippleType, rippleColor, isRippleShadow, rippleShadow);
-        rippleParams = initParamRippleView(rippleRadius, rippleStrokeWidth);
 
-        rippleDelay = rippleDurationTime / rippleNumber;
+        // delay between each ripples
+        int rippleDelay = rippleDurationTime / rippleNumber;
+        LayoutParams rippleParams = initParamRippleView(rippleRadius, rippleStrokeWidth, rippleShadow);
         animatorSet = initAnimatorSetRippleView(rippleParams, rippleDurationTime, rippleDelay);
     }
 
@@ -93,13 +90,14 @@ public class RippleLayout extends RelativeLayout {
         paint.setStyle(rippleType == DEFAULT_FILL_TYPE ? Paint.Style.FILL : Paint.Style.STROKE);
         paint.setColor(rippleColor);
         if (isRippleShadow)
-            paint.setShadowLayer(rippleShadow, 0.0f, 0.0f, Color.GRAY);
+            paint.setShadowLayer(rippleShadow, 0f, 0f, Color.BLACK);
         return paint;
     }
 
     private LayoutParams initParamRippleView(final float rippleRadius,
-                                             final float rippleStrokeWidth) {
-        int w = (int) (2 * (rippleRadius + rippleStrokeWidth));
+                                             final float rippleStrokeWidth,
+                                             final int rippleShadow) {
+        int w = (int) (2 * (rippleRadius + rippleStrokeWidth)) + rippleShadow;
         LayoutParams rippleParams = new LayoutParams(w, w);
         rippleParams.addRule(CENTER_IN_PARENT, TRUE);
         return rippleParams;
@@ -115,6 +113,7 @@ public class RippleLayout extends RelativeLayout {
             RippleView rippleView = new RippleView(getContext());
             addView(rippleView, rippleParams);
             rippleViewList.add(rippleView);
+
             // scaleX
             final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(rippleView, "ScaleX", 1.0f, rippleScale);
             scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
@@ -147,6 +146,7 @@ public class RippleLayout extends RelativeLayout {
 
         public RippleView(Context context) {
             super(context);
+            this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             this.setVisibility(View.INVISIBLE);
         }
 

@@ -10,6 +10,7 @@
         <attr name="rl_rippleAmount" format="integer"/>
         <attr name="rl_type" format="integer"/>
         <attr name="rl_shadow" format="integer"/>
+        <attr name="rl_shadow_color" format="color"/>
     </declare-styleable>
 
 </resources>

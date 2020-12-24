@@ -31,6 +31,7 @@ public class RippleLayout extends RelativeLayout {
     private boolean isAnimationRunning = false;
     private boolean isRippleShadow = false;
 
+    private int shadowColor;
     private int rippleDurationTime;
     private int rippleNumber;
     private float rippleScale; // max ripple scale
@@ -67,6 +68,7 @@ public class RippleLayout extends RelativeLayout {
         // is Paint.Style
         int rippleType = typedArray.getInt(R.styleable.RippleLayout_rl_type, DEFAULT_FILL_TYPE);
         rippleShadow = typedArray.getInt(R.styleable.RippleLayout_rl_shadow, DEFAULT_RIPPLE_SHADOW);
+        shadowColor = typedArray.getColor(R.styleable.RippleLayout_rl_shadow_color, getResources().getColor(android.R.color.black));
         int rippleColor = typedArray.getColor(R.styleable.RippleLayout_rl_color, getResources().getColor(android.R.color.background_light));
         typedArray.recycle();
 
@@ -75,7 +77,7 @@ public class RippleLayout extends RelativeLayout {
         }
 
         isRippleShadow = rippleShadow != DEFAULT_RIPPLE_SHADOW;
-        paint = initPaintRippleView(rippleType, rippleColor, isRippleShadow, rippleShadow);
+        paint = initPaintRippleView(rippleType, rippleColor, isRippleShadow, rippleShadow, shadowColor);
 
         // delay between each ripples
         int rippleDelay = rippleDurationTime / rippleNumber;
@@ -84,13 +86,15 @@ public class RippleLayout extends RelativeLayout {
     }
 
     private Paint initPaintRippleView(final int rippleType, final int rippleColor,
-                                      final boolean isRippleShadow, final int rippleShadow) {
+                                      final boolean isRippleShadow,
+                                      final int rippleShadow,
+                                      final int shadowColor) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(rippleType == DEFAULT_FILL_TYPE ? Paint.Style.FILL : Paint.Style.STROKE);
         paint.setColor(rippleColor);
         if (isRippleShadow)
-            paint.setShadowLayer(rippleShadow, 0f, 0f, Color.BLACK);
+            paint.setShadowLayer(rippleShadow, 0f, 0f, shadowColor);
         return paint;
     }
 
